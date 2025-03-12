@@ -21,7 +21,7 @@ public class LoginTest extends BaseTest {
     @Test
     public void checkPositiveLoginWithEmptyPassword() {
         loginPage.open()
-                .loginForNegativeData("standard_user", "");
+                .loginForNegativeData(user, "");
         assertEquals(loginPage.getErrorMessage(),
                 "Epic sadface: Password is required");
     }
@@ -37,7 +37,7 @@ public class LoginTest extends BaseTest {
     @Test
     public void checkPositiveLoginWithPositivePassword() {
         loginPage.open()
-                .login("standard_user", "secret_sauce");
+                .login(user, password);
         assertTrue(productsPage.isPageOpened());
     }
 
@@ -53,7 +53,7 @@ public class LoginTest extends BaseTest {
     @Test
     public void checkEmptyLoginWithPositivePassword() {
         loginPage.open()
-                .loginForNegativeData("", "secret_sauce");
+                .loginForNegativeData("", password);
         assertEquals(loginPage.getErrorMessage(),
                 "Epic sadface: Username is required");
     }

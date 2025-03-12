@@ -10,6 +10,9 @@ import pages.*;
 import java.time.Duration;
 
 public class BaseTest {
+    String user;
+    String password;
+
     WebDriver driver;
     LoginPage loginPage;
     ProductsPage productsPage;
