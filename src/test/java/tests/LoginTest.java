@@ -1,8 +1,9 @@
 package tests;
 
-import org.openqa.selenium.By;
-import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class LoginTest extends BaseTest {
 
@@ -16,10 +17,11 @@ public class LoginTest extends BaseTest {
     */
 
     @Test
-    public void checkPositiveLoginWithEmptyPassword(){
-        loginPage.open();
-        loginPage.login("standard_user", "");
-        Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Password is required");
+    public void checkPositiveLoginWithEmptyPassword() {
+        loginPage.open()
+                .loginForNegativeData("standard_user", "");
+        assertEquals(loginPage.getErrorMessage(),
+                "Epic sadface: Password is required");
     }
 
     /*
@@ -31,10 +33,10 @@ public class LoginTest extends BaseTest {
     */
 
     @Test
-    public void checkPositiveLoginWithPositivePassword(){
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        Assert.assertTrue(productsPage.isPageOpened());
+    public void checkPositiveLoginWithPositivePassword() {
+        loginPage.open()
+                .login("standard_user", "secret_sauce");
+        assertTrue(productsPage.isPageOpened());
     }
 
     /*
@@ -47,14 +49,11 @@ public class LoginTest extends BaseTest {
     */
 
     @Test
-    public void checkEmptyLoginWithPositivePassword(){
-        driver.get("https://www.saucedemo.com/");
-        driver.findElement(By.id("user-name")).sendKeys("");
-        driver.findElement(By.id("password")).sendKeys("secret_sauce");
-        driver.findElement(By.id("login-button")).click();
-
-        String errorMessage = driver.findElement(By.cssSelector("[data-test=error]")).getText();
-        Assert.assertEquals(errorMessage, "Epic sadface: Username is required");
+    public void checkEmptyLoginWithPositivePassword() {
+        loginPage.open()
+                .loginForNegativeData("", "secret_sauce");
+        assertEquals(loginPage.getErrorMessage(),
+                "Epic sadface: Username is required");
     }
 
     /*
@@ -67,13 +66,10 @@ public class LoginTest extends BaseTest {
     */
 
     @Test
-    public void checkNegativeLoginWithNegativePassword(){
-        driver.get("https://www.saucedemo.com/");
-        driver.findElement(By.id("user-name")).sendKeys("ggg");
-        driver.findElement(By.id("password")).sendKeys("ggg");
-        driver.findElement(By.id("login-button")).click();
-
-        String errorMessage = driver.findElement(By.cssSelector("[data-test=error]")).getText();
-        Assert.assertEquals(errorMessage, "Epic sadface: Username and password do not match any user in this service");
+    public void checkNegativeLoginWithNegativePassword() {
+        loginPage.open()
+                .loginForNegativeData("ggg", "ggg");
+        assertEquals(loginPage.getErrorMessage(),
+                "Epic sadface: Username and password do not match any user in this service");
     }
 }
