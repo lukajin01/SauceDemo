@@ -1,5 +1,6 @@
 package tests;
 
+import dto.Customer;
 import io.qameta.allure.*;
 import org.testng.annotations.Test;
 
@@ -19,6 +20,12 @@ public class CheckoutTest extends BaseTest {
      * 9. Проверить, что на экране присутствует сообщение "Thank you for your order!"
      * */
 
+    Customer customer = Customer.builder()
+            .firstName("Ivan")
+            .lastName("Ivanov")
+            .zipCode("123456")
+            .build();
+
     @Test
     @Link("https://www.saucedemo.com/")
     @TmsLink("www.testrail.com/SD/SD-01")
@@ -36,7 +43,7 @@ public class CheckoutTest extends BaseTest {
                 .addToCart("Sauce Labs Bolt T-Shirt")
                 .clickToCart()
                 .clickToCheckout()
-                .fillingForm("Ivan", "Ivanov", "123456")
+                .fillingForm(customer)
                 .clickToContinue()
                 .clickToFinish();
         assertEquals(completePage.getCompleteMessage(),
