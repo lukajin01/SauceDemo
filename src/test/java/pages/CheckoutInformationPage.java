@@ -17,7 +17,7 @@ public class CheckoutInformationPage {
     private static final By ZIP_CODE_FIELD = By.id("postal-code");
     private static final By CONTINUE_BUTTON = By.id("continue");
 
-    @Step("Заполнение формы данными: имя - {customer.getFirstName()}, фамилия - {customer.getLastName()}, индекс - {customer.getZipCode()}")
+    @Step("Заполнение формы данными: имя - {firstName}, фамилия - {lastName}, индекс - {zipCode}")
     public CheckoutInformationPage fillingForm(Customer customer){
         driver.findElement(FIRST_NAME_FIELD).sendKeys(customer.getFirstName());
         driver.findElement(LAST_NAME_FIELD).sendKeys(customer.getLastName());
